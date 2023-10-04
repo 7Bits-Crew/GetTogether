@@ -9,12 +9,19 @@ namespace API.Controllers
     [ApiController]
     public class EventController : ControllerBase
     {
-
+        private DataContext _context;
+        public EventController(DataContext context)
+        {
+            _context = context;
+        }
         // POST api/<EventController>
         [HttpPost]
-        public void Post([FromBody] Event value)
+        public async Task<ActionResult<List<Event>>> Post([FromBody] Event value)
         {
-            Console.WriteLine($"Прийнято об'єкт: {value.Name}");
+            value.Id = Guid.Empty;
+            _context.Events.Add(value);
+            await _context.SaveChangesAsync();
+            return Ok(await _context.Events.ToArrayAsync());
         }
 
     }
