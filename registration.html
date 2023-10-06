@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ukr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Вхід</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            margin-top: 120px;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            z-index: 3;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: calc(100% - 40px);
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 100px;
+            display: inline-block;
+        }
+
+        .btn {
+            background-color: #A689FF;
+            color: white;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 100px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: rgba(166, 137, 255, 0.5);
+        }
+
+        .header-text {
+            color: rebeccapurple;
+        }
+
+        .ellipse-2 {
+            background-color: rgba(166, 137, 255, 1);
+            border-radius: 89.5px;
+            height: 179px;
+            left: -60px;
+            position: absolute;
+            top: 115px;
+            width: 179px;
+        }
+
+        .ellipse-2-1 {
+            height: 201px;
+            left: 40px;
+            background-color: rgba(214, 187, 252, 0.58);
+            border-radius: 100.5px;
+            position: absolute;
+            top: 0;
+            width: 201px;
+        }
+
+        .ellipse-container {
+            height: 170px;
+            position: relative;
+            max-width: 400px;
+            margin-top: -120px;
+        }
+
+        .border {
+            border-bottom: 4px solid;
+        }
+        .password-container {
+            width: 400px;
+            position: relative;
+        }
+
+        .fa-eye,
+        .fa-eye-slash {
+            position: absolute;
+            top: 28%;
+            right: 4%;
+            cursor: pointer;
+            color: lightgray;
+        }
+
+
+    </style>
+</head>
+
+<body>
+<div class="ellipse-container">
+    <div class="ellipse-2"></div>
+    <div class="ellipse-2-1"></div>
+</div>
+<div class="container">
+    <h2 class="header-text">Давай знайомитись</h2>
+    <form class="form-group" method="post" onsubmit="return validateForm()">
+        <input type="text" placeholder="Ім`я" name="name" required><br>
+        <input type="text" placeholder="Прізвище" name="surname" required><br>
+        <input type="email" placeholder="Пошта" name="email" required><br>
+        <div class="password-container">
+            <input type="password" placeholder="Пароль" id="password" name="password" required>
+            <i class="fas fa-eye" id="eye"></i>
+        </div>
+      <div class="password-container">
+            <input type="password" placeholder="Підтвердження паролю" id="password1" name="password" required>
+            <i class="fas fa-eye" id="eye1"></i>
+        </div>
+        <button type="submit" class="btn">Зареєструватися</button>
+    </form>
+</div>
+
+<script>
+    const passwordInput = document.getElementById('password');
+    const eyeIcon = document.getElementById('eye');
+    const passwordConfirmInput = document.getElementById('password1');
+    const eyeIcon1 = document.getElementById('eye1');
+
+    eyeIcon.addEventListener('click', togglePasswordVisibility);
+    eyeIcon1.addEventListener('click', toggleConfirmPasswordVisibility);
+
+    function togglePasswordVisibility() {
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            eyeIcon.classList.remove('fa-eye');
+            eyeIcon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            eyeIcon.classList.remove('fa-eye-slash');
+            eyeIcon.classList.add('fa-eye');
+        }
+    }
+
+    function toggleConfirmPasswordVisibility() {
+        if (passwordConfirmInput.type === 'password') {
+            passwordConfirmInput.type = 'text';
+            eyeIcon1.classList.remove('fa-eye');
+            eyeIcon1.classList.add('fa-eye-slash');
+        } else {
+            passwordConfirmInput.type = 'password';
+            eyeIcon1.classList.remove('fa-eye-slash');
+            eyeIcon1.classList.add('fa-eye');
+        }
+    }
+
+function validateForm() {
+        // Ваша логіка перевірки форми тут
+        return true; // Повертає true, якщо форма валідна, інакше false
+    }
+</script>
+</body>
+
+</html>
