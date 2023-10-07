@@ -16,7 +16,7 @@ namespace API.Controllers
         }
         // POST api/<EventController>
         [HttpPost]
-        public async Task<ActionResult<List<Event>>> Post([FromBody] Event value)
+        public async Task<ActionResult<List<Event>>> AddEvent([FromBody] Event value)
         {
             value.Id = Guid.Empty;
             _context.Events.Add(value);
