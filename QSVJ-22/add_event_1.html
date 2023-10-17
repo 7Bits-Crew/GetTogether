@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add new event</title>
+    <link rel="stylesheet" href="add_event.css">
+    <link rel="icon" href="GetTogether-logo.png" type="image/x-icon">
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+</head>
+<body>
+    <div class="top" id="top">
+        <button type="button" id="back-button" class="btn btn-back" onclick="goBack()">
+            <iconify-icon icon="ic:baseline-keyboard-arrow-left" width="32"></iconify-icon>
+        </button>
+        <h1>Add an event</h1>
+        <button type="button" id="close-button" class="btn close" onclick="Home()">
+            <iconify-icon icon="ic:baseline-clear" width="32"></iconify-icon>
+        </button>
+    </div>
+
+    <div class="container">
+        <form action="add_event_2.html" method="POST" onsubmit="return validateForm()">
+            <div class="name" id="name">
+                <input type="text" id="eventName" placeholder="Name" required>
+            </div>
+            <div class="description">
+                <textarea id="description" placeholder="• What is it about? 
+• For who 
+• What are you going to do" maxlength="200"></textarea>
+            </div>
+
+            <div class="online">
+                <span>Online</span>
+                <label class="switch">
+                    <input type="checkbox" id="onlineCheckbox">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+              
+            <div class="link" id="link">
+                <input type="text" placeholder="Link" id="linkInput" disabled>
+            </div>
+
+            <div class="category-list">
+                <div class="category">
+                    <input type="checkbox" id="Sport" name="Sport">
+                    <label for="Sport">Sport</label>
+                </div>
+                <!-- Repeat for other checkboxes -->
+                <div class="category">
+                    <input type="checkbox" id="Music" name="Music">
+                    <label for="Music">Music</label>
+                </div>
+
+                <div class="category">
+                    <input type="checkbox" id="Party" name="Party">
+                    <label for="Party">Party</label>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class = "bottom">
+        <progress value="25" max="100" class="progress-bar"></progress>
+        <div class="btn-container">
+            <button type="button" id="nextButton" class="btn">Next</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const eventNameInput = document.getElementById("eventName");
+            const onlineCheckbox = document.getElementById("onlineCheckbox");
+            const linkInput = document.getElementById("linkInput");
+            const descriptionTextarea = document.getElementById("description");
+
+            // Set linkInput to be disabled initially
+            linkInput.setAttribute("disabled", "true");
+
+            // Function to validate the form
+            function validateForm() {
+                const isValidName = eventNameInput.value.trim() !== ""; // Check if the name field is not empty
+                const isValidDescription = descriptionTextarea.value.length <= 200;
+
+                if (onlineCheckbox.checked) {
+                    const linkValue = linkInput.value;
+                    const isValidEmail = /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/.test(linkValue);
+
+                    if (!isValidEmail || linkValue.trim() === "") {
+                        linkInput.classList.add("error");
+                        return false;
+                    }
+                }
+
+                if (!isValidDescription || !isValidName) {
+                    if (!isValidName) {
+                        eventNameInput.classList.add("error");
+                    } else {
+                        eventNameInput.classList.remove("error");
+                    }
+                    descriptionTextarea.classList.add("error");
+                    return false;
+                }
+
+                return true; // Return true to allow form submission on validation success
+            }
+
+            // Event listener for the "Online" checkbox
+            onlineCheckbox.addEventListener("change", function () {
+                if (onlineCheckbox.checked) {
+                    linkInput.removeAttribute("disabled");
+                } else {
+                    linkInput.setAttribute("disabled", "true");
+                    linkInput.classList.remove("error");
+                }
+            });
+
+            // Event listener for input in the "Link" field
+            linkInput.addEventListener("input", function () {
+                const linkValue = linkInput.value;
+                const isValidEmail = /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/.test(linkValue);
+
+                if (isValidEmail || linkValue.trim() === "") {
+                    linkInput.classList.remove("error");
+                } else {
+                    linkInput.classList.add("error");
+                }
+            });
+
+            // Event listener for input in the "Description" field
+            descriptionTextarea.addEventListener("input", function () {
+                const descriptionValue = descriptionTextarea.value;
+                const maxLength = 200;
+
+                if (descriptionValue.length <= maxLength) {
+                    descriptionTextarea.classList.remove("error");
+                } else {
+                    descriptionTextarea.classList.add("error");
+                }
+            });
+
+            // Add an event listener to the "Next" button
+            const nextButton = document.getElementById("nextButton");
+
+            nextButton.addEventListener("click", function () {
+                if (validateForm()) {
+                    // Redirect to add_event_2.html
+                    window.location.href = "add_event_2.html";
+                }
+            });
+        });
+    </script>
+</body>
+</html>

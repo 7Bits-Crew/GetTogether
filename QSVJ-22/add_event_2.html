@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add new event</title>
+    <link rel="stylesheet" href="add_event.css">
+    <link rel="icon" href="GetTogether-logo.png" type="image/x-icon">
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+</head>
+<body>
+    <div class="top" id="top">
+        <a href="add_event_1.html" class="btn btn-back" id="back-button">
+            <iconify-icon icon="ic:baseline-keyboard-arrow-left" width="32"></iconify-icon>
+        </a>
+        
+        <h1>Add an event</h1>
+        <button type="button" id="close-button" class="btn close" onclick="Home()">
+            <iconify-icon icon="ic:baseline-clear" width="32"></iconify-icon>
+        </button>
+    </div>
+
+    <div class="container">
+        <form action="add_event_3.html" method="POST" onsubmit="return validateForm()">
+            
+            <div class="date">
+                <label for="date">Date</label>
+                <div class="start-end">
+                    <input type="date" id="date_start" placeholder="Select a date" required min="<?= date('Y-m-d') ?>">
+                    <input type="date" id="date_end" placeholder="Select a date" min="<?= date('Y-m-d') ?>">
+                </div>
+                <div class="days">
+                    <input type="checkbox" id="days" onclick="toggleDateEndPicker()">
+                    <label for="days">More than 1 day</label>
+                </div>
+            </div>
+
+            <div class="duration" id="duration">
+                <label for="duration">Duration</label>
+                <div class="time">
+                    <input type="time" id="start" required min="<?= date('H:i', strtotime('+1 minute')) ?>">
+                    <input type="time" id="end" required>
+                </div>
+            </div>
+            
+            <div class="participants">
+                <div class="info">
+                    <span>Participants</span>
+                    <div class="additional">
+                        How many people can join the event
+                    </div>
+                </div>
+
+                <div class = "buttons">
+                    <input type="number" id="participants" min="0">
+                    <button type = "button" class = "btn" id = "plus">+</button>
+                    <button type = "button" class = "btn" id = "minus">-</button>
+                </div>
+            </div>
+
+            <div class="template">
+                <div class="info">
+                    <span>Save the template</span>
+                    <div class="additional">
+                        To ease the creation of a repeat event
+                    </div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="saveTemplate">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+
+            <div class="public">
+                <div class="info">
+                    <span>Public event</span>
+                    <div class="additional">
+                        Permission to add new participants
+                    </div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="publicEvent">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </form>
+    </div>
+
+    <div class="bottom">
+        <progress value="50" max="100" class="progress-bar"></progress>
+        <div class="btn-container">
+            <button type="button" class="btn" onclick="next()">Next</button>
+        </div>
+    </div>
+
+    <script>
+        // Initialize participants count to 0
+        let participantsCount = 0;
+
+        // Check if "More than 1 day" checkbox state is saved in local storage and apply it
+        const daysCheckbox = document.getElementById("days");
+        const daysChecked = localStorage.getItem("daysChecked") === "true";
+        daysCheckbox.checked = daysChecked;
+        toggleDateEndPicker();
+
+        function toggleDateEndPicker() {
+            const dateEndPicker = document.getElementById("date_end");
+            
+            dateEndPicker.disabled = !daysCheckbox.checked;
+            if (!daysCheckbox.checked) {
+                dateEndPicker.value = ""; // Clear the value if not needed
+            }
+
+            // Save the "More than 1 day" checkbox state in local storage
+            localStorage.setItem("daysChecked", daysCheckbox.checked);
+        }
+
+        function validateForm() {
+            const dateInput = document.getElementById("date_start");
+            const startInput = document.getElementById("start");
+            const endInput = document.getElementById("end");
+            const participantsInput = document.getElementById("participants");
+
+            const selectedDate = new Date(dateInput.value);
+            const currentDate = new Date();
+            currentDate.setMinutes(currentDate.getMinutes() + 1); // Adding 1 minute
+
+            if (selectedDate < currentDate) {
+                alert("Please select a date and time in the future.");
+                return false;
+            }
+
+            if (startInput.value >= endInput.value) {
+                alert("The end time should be after the start time.");
+                return false;
+            }
+
+            // Ensure the participants count is a non-negative integer
+            if (participantsCount < 0 || isNaN(participantsCount) || !Number.isInteger(participantsCount)) {
+                alert("Participants count must be a non-negative whole number.");
+                return false;
+            }
+
+            // Prepare data for submission
+            const formData = {
+                date: dateInput.value,
+                startTime: startInput.value,
+                endTime: endInput.value,
+                participants: participantsCount,
+                saveTemplate: document.getElementById("saveTemplate").checked,
+                publicEvent: document.getElementById("publicEvent").checked,
+            };
+
+            // You can send the formData object to the server using fetch or other methods here.
+
+            return true; // Allow form submission
+        }
+
+        function next() {
+            if (validateForm()) {
+                // Submit the form data
+                const form = document.querySelector('form');
+                form.submit();
+            }
+        }
+
+        // Add event listeners for the plus and minus buttons
+        const plusButton = document.getElementById("plus");
+        const minusButton = document.getElementById("minus");
+
+        plusButton.addEventListener("click", () => {
+            participantsCount++;
+            updateParticipantsCount();
+        });
+
+        minusButton.addEventListener("click", () => {
+            if (participantsCount > 0) {
+                participantsCount--;
+                updateParticipantsCount();
+            }
+        });
+
+        // Function to update the participants input field
+        function updateParticipantsCount() {
+            const participantsInput = document.getElementById("participants");
+            participantsInput.value = participantsCount;
+        }
+    </script>
+</body>
+</html>
