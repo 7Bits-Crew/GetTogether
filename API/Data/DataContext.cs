@@ -7,5 +7,6 @@ namespace API.Data
     {
         public DataContext(DbContextOptions<DataContext> opt): base(opt) { }
         public DbSet<Event> Events { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }
