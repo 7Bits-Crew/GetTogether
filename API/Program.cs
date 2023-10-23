@@ -39,6 +39,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false
         };
     });
+builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
+{
+    build.WithOrigins("https://localhost:7129").AllowAnyMethod().AllowAnyHeader();
+}));
 
 
 var app = builder.Build();
@@ -49,6 +53,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors("corspolicy");
 
 app.UseHttpsRedirection();
 

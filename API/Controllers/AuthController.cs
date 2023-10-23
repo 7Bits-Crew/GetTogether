@@ -49,6 +49,7 @@ namespace API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login(UserDTO request)
         {
+            await Console.Out.WriteLineAsync(request.Name);
             var user = _context.Users.FirstOrDefaultAsync(u => u.Name == request.Name).Result;
             if (user == null) {
                 return BadRequest("Такого користувача не існує");
@@ -57,6 +58,7 @@ namespace API.Controllers
                 return BadRequest("Неправильний пароль");
             }
             var token = CreateToken(user);
+            await Console.Out.WriteLineAsync(token);
             return Ok(token);
         }
 

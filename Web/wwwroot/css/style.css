@@ -1,0 +1,154 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.container {
+    max-width: 90%;
+    margin: 0 auto;
+    margin-top: 120px;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    z-index: 3;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 90%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 100px;
+    display: inline-block;
+}
+
+.btn {
+    background-color: #A689FF;
+    color: white;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: rgba(166, 137, 255, 0.5);
+}
+
+.header-text {
+    color: #26005C;
+}
+
+.ellipse-2 {
+    background-color: rgba(166, 137, 255, 1);
+    border-radius: 89.5px;
+    height: 179px;
+    left: -60px;
+    position: absolute;
+    top: 120px;
+    width: 179px;
+}
+
+.ellipse-2-1 {
+    height: 201px;
+    left: 40px;
+    background-color: rgba(214, 187, 252, 0.58);
+    border-radius: 100.5px;
+    position: absolute;
+    top: 0;
+    width: 201px;
+}
+
+.ellipse-container {
+    height: 170px;
+    position: relative;
+    max-width: 400px;
+    margin-top: -130px;
+}
+
+.border {
+    border-bottom: 4px solid;
+}
+
+progress {
+    width: 300px;
+    height: 5px;
+    border: 0;
+}
+
+progress::-webkit-progress-bar {
+    background-color: rgba(166, 137, 255, 0.40);
+}
+
+progress::-webkit-progress-value {
+    background-color: #6200EE;
+}
+
+.password-container {
+    width: 100%;
+    position: relative;
+}
+
+.fa-eye,
+.fa-eye-slash {
+    position: absolute;
+    top: 28%;
+    right: 4%;
+    cursor: pointer;
+    color: lightgray;
+}
+
+.sign {
+    display: flex;
+}
+
+.google-btn {
+    margin-left: auto;
+    margin-right: auto;
+    height: 42px;
+    padding: 14px 15px;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 100px;
+    box-shadow: 0 3px 4px 0 rgba(0, 0, 0, .25);
+    cursor: pointer;
+    transition: box-shadow 0.3s;
+}
+
+.google-btn:hover {
+    box-shadow: 0 0 6px #6200EE;
+}
+
+.google-icon-wrapper {
+    position: absolute;
+    margin-top: 1px;
+    margin-left: 1px;
+    width: 40px;
+    height: 40px;
+    border-radius: 2px;
+}
+
+.google-icon {
+    position: absolute;
+    margin-top: 11px;
+    margin-left: 11px;
+    width: 18px;
+    height: 18px;
+}
+
+.btn-text {
+    margin: 11px 11px 0px 70px;
+    color: #6200EE;
+    font-size: 14px;
+    letter-spacing: 0.2px;
+}

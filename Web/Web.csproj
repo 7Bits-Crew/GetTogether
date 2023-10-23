@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Views\Login\SignIn.cshtml" />
+    <None Include="wwwroot\add_event_1.html" />
+    <None Include="wwwroot\add_event_2.html" />
+    <None Include="wwwroot\add_event_3.html" />
+    <None Include="wwwroot\add_event_4.html" />
+  </ItemGroup>
+
+</Project>

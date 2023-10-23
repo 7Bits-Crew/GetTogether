@@ -18,11 +18,13 @@ namespace API.Models
         [StringLength(500)]
         public string? Description { get; set; }
         public EventType Type { get; set; }
-        public PrivacyType Privacy { get; set; }
+        public bool publicEvent { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-        public int? MembersCountMin { get; set; }
-        public int? MembersCountMax { get; set; }
+        public int Participants { get; set; }
+        public bool SaveTemplate { get; set; }
+        public bool Online { get; set; }
+        public string LinkInput { get; set; }
     }
 }
 
