@@ -1,8 +1,11 @@
 ﻿namespace API.Models
 {
-    public enum EventType
+    [PrimaryKey("Id")]
+    public class EventType
     {
-        //TODO Make more types
-        SPORT, MUSIC, PARTY
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string PhotoSource { get; set; }
+        public List<Event> Events { get; set; }
     }
 }

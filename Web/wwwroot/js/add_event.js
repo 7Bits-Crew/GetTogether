@@ -91,14 +91,7 @@ if (filename === "add_event_2.html") {
         participantsInput.value = newValue;
         sessionStorage.setItem("participants", newValue);
         
-        // function handleSaveTemplateAndPublicEvent() {
-        //     eventDetails.saveTemplate = document.getElementById("saveTemplate").checked;
-        //     eventDetails.publicEvent = document.getElementById("publicEvent").checked;
-        // }
-    
-        // // Add event listeners to the saveTemplate and publicEvent checkboxes
-        // document.getElementById("saveTemplate").addEventListener("change", handleSaveTemplateAndPublicEvent);
-        // document.getElementById("publicEvent").addEventListener("change", handleSaveTemplateAndPublicEvent);
+        
     }
 }
 

@@ -27,7 +27,7 @@ namespace API.Controllers
         }
         [HttpPost("register")]
         public async Task<ActionResult<User>> Register(UserDTO request) {
-            if (_context.Users.FirstOrDefault(u => u.Name == request.Name) is not null) {
+            if (_context.Users.FirstOrDefault(u => u.Email == request.Email) is not null) {
                 return BadRequest("Даний користувач існує");
             }
             
@@ -49,8 +49,7 @@ namespace API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login(UserDTO request)
         {
-            await Console.Out.WriteLineAsync(request.Name);
-            var user = _context.Users.FirstOrDefaultAsync(u => u.Name == request.Name).Result;
+            var user = _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email).Result;
             if (user == null) {
                 return BadRequest("Такого користувача не існує");
             }
@@ -59,7 +58,8 @@ namespace API.Controllers
             }
             var token = CreateToken(user);
             await Console.Out.WriteLineAsync(token);
-            return Ok(token);
+            var n = new { token = token };
+            return Ok(n);
         }
 
         private string CreateToken(User user)

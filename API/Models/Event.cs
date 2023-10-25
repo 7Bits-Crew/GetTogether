@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace API.Models
 {
     [Table("Event")]
+    [PrimaryKey("Id")]
     public class Event
     {
         [Key]
@@ -17,7 +18,7 @@ namespace API.Models
         public string Name { get; set; }
         [StringLength(500)]
         public string? Description { get; set; }
-        public EventType Type { get; set; }
+        public List<EventType> Type { get; set; }
         public bool publicEvent { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
