@@ -11,7 +11,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-var connection = builder.Configuration.GetConnectionString("DefaultConnection");
+var host = Environment.GetEnvironmentVariable("DB_HOST");
+var name = Environment.GetEnvironmentVariable("DB_NAME");
+var pass = Environment.GetEnvironmentVariable("DB_PASS");
+var port = Environment.GetEnvironmentVariable("DB_PORT");
+//var connection = $"Server=localhost;Database=GTTest;Uid=root;Pwd=;";
+var connection = $"Server={host};Port={port};Database={name};Uid=root;Pwd={pass};SslMode=none;";
 builder.Services.AddDbContext<DataContext>(option =>
 {
     option.UseMySql(connection, ServerVersion.AutoDetect(connection));
@@ -39,9 +44,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false
         };
     });
+var web = Environment.GetEnvironmentVariable("WEB_HOST");
+
 builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
 {
-    build.WithOrigins("https://localhost:7129").AllowAnyMethod().AllowAnyHeader();
+    build.WithOrigins(web).AllowAnyMethod().AllowAnyHeader();
 }));
 
 

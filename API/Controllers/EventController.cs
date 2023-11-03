@@ -8,7 +8,6 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class EventController : ControllerBase
     {
         private DataContext _context;
