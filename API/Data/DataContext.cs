@@ -31,6 +31,7 @@ namespace API.Data
             builder.Entity<User>(entity => {
                 entity.HasIndex(e => e.Email).IsUnique();
             });
+            builder.Entity<EventType>().HasData(new EventType { Id = 1, Name="Sport", PhotoSource="Sport.webp" }, new EventType { Id = 2, Name = "Music", PhotoSource = "Music.webp" }, new EventType { Id = 3, Name = "Party", PhotoSource = "Party.webp" });
         }
         
     }

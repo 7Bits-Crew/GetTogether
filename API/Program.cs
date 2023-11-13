@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,8 +49,11 @@ var web = Environment.GetEnvironmentVariable("WEB_HOST");
 
 builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
 {
-    build.WithOrigins(web).AllowAnyMethod().AllowAnyHeader();
+    build.WithOrigins("asd").AllowAnyMethod().AllowAnyHeader();
 }));
+builder.Services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
 
 
 var app = builder.Build();

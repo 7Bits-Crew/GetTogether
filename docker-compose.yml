@@ -22,13 +22,17 @@ services:
     depends_on: 
       - database
     ports:
-      - 8080:443
+      - 8080:80
+      - 8081:443
     environment:
+      - ASPNETCORE_URLS=https://+;http://+
+      - ASPNETCORE_HTTPS_PORT=8081
+      - ASPNETCORE_ENVIORMENT=Development
       - DB_HOST=DB
       - DB_PASS=my-secret-pw
       - DB_NAME=GTTest
       - DB_PORT=3306
-      - WEB_HOST=https://localhost:8001
+      - WEB_HOST=https://localhost:8002
     
     
   web:
@@ -40,9 +44,14 @@ services:
     depends_on: 
       - api
     ports:
-      - 8001:443
+      - 8001:80
+      - 8002:443
     environment:
-      - API_HOST=localhost:8080
+      ASPNETCORE_URLS: "https://+;http://+"
+      ASPNETCORE_HTTPS_PORT: "8002"
+      ASPNETCORE_ENVIORMENT: "Development"
+    
+  
     
     
 
