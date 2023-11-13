@@ -49,7 +49,7 @@ var web = Environment.GetEnvironmentVariable("WEB_HOST");
 
 builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
 {
-    build.WithOrigins("asd").AllowAnyMethod().AllowAnyHeader();
+    build.WithOrigins(web).AllowAnyMethod().AllowAnyHeader();
 }));
 builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
