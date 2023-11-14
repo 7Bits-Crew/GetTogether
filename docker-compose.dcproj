@@ -9,6 +9,10 @@
     <DockerServiceName>api</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="docker-compose - Copy.override.yml">
+      <DependentUpon>db_and_back.yml</DependentUpon>
+    </None>
+    <None Include="db_and_back.yml" />
     <None Include="docker-compose.override.yml">
       <DependentUpon>docker-compose.yml</DependentUpon>
     </None>

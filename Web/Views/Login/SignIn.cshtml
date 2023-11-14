@@ -69,7 +69,7 @@
             const email = document.getElementsByName('email')[0].value;
             const password = document.getElementsByName('password')[0].value;
             // Відправляємо POST-запит до API для входу
-            fetch('https://localhost:7050/api/auth/login', {
+            fetch('https://localhost:8081/api/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
