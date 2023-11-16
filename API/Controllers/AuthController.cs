@@ -20,11 +20,13 @@ namespace API.Controllers
         private UserValidation _validator = new UserValidation();
         private DataContext _context;
         private IConfiguration _configuration;
+        
         public AuthController(DataContext context,IConfiguration config)
         {
             _context = context;
             _configuration = config;
         }
+        
         [HttpPost("register")]
         public async Task<ActionResult<User>> Register(UserDTO request) {
             if (_context.Users.FirstOrDefault(u => u.Email == request.Email) is not null) {
@@ -46,6 +48,7 @@ namespace API.Controllers
             await _context.SaveChangesAsync();
             return Ok(user);
         }
+        
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login(UserDTO request)
         {
@@ -77,12 +80,14 @@ namespace API.Controllers
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
             return jwt;
         }
+        
         private void CreatePasswordHash(string pass, out byte[] hash, out byte[] salt) {
             using (var hmac = new HMACSHA512()) {
                 salt = hmac.Key;
                 hash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(pass));
             }
         }
+        
         private bool VerifyPasswordHash(string pass, byte[] hash, byte[] salt) {
             using (var hmac = new HMACSHA512(salt)) {
                 var computed = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(pass));
