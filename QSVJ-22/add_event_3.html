@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add new event</title>
+    <link rel="stylesheet" href="add_event.css">
+    <link rel="icon" href="GetTogether-logo.png" type="image/x-icon">
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+    <!-- Include the Polyfill and Google Maps API script -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdNLtdXEyIjmyLAHGNteoV0Y1gzp0y_CY&callback=initMap&v=weekly" defer></script>
+
+    <script>
+      // Your Google Maps JavaScript code (initMap function) goes here
+      let map, infoWindow;
+
+      function initMap() {
+        map = new google.maps.Map(document.getElementById("map"), {
+          center: { lat: -34.397, lng: 150.644 },
+          zoom: 6,
+        });
+        infoWindow = new google.maps.InfoWindow();
+
+        const locationButton = document.createElement("button");
+
+        locationButton.textContent = "Pan to Current Location";
+        locationButton.classList.add("custom-map-control-button");
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(
+          locationButton
+        );
+        locationButton.addEventListener("click", () => {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+              (position) => {
+                const pos = {
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude,
+                };
+
+                infoWindow.setPosition(pos);
+                infoWindow.setContent("Location found.");
+                infoWindow.open(map);
+                map.setCenter(pos);
+              },
+              () => {
+                handleLocationError(true, infoWindow, map.getCenter());
+              }
+            );
+          } else {
+            handleLocationError(false, infoWindow, map.getCenter());
+          }
+        });
+      }
+
+      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(
+          browserHasGeolocation
+            ? "Error: The Geolocation service failed."
+            : "Error: Your browser doesn't support geolocation."
+        );
+        infoWindow.open(map);
+      }
+    </script>
+</head>
+
+<body>
+    <div class="top" id="top">
+        <a href="add_event_2.html" class="btn btn-back" id="back-button">
+            <iconify-icon icon="ic:baseline-keyboard-arrow-left" width="32"></iconify-icon>
+        </a>
+        <h1>Add an event</h1>
+        <button type="button" id="close-button" class="btn close" onclick="Home()">
+            <iconify-icon icon="ic:baseline-clear" width="32"></iconify-icon>
+        </button>
+    </div>
+
+    <div class="container">
+        <form id="eventForm">
+            <h2>Location</h2>
+            <div class="location">
+                <input type="text" id="location" name="location" placeholder="Enter location" required>
+            </div>
+            
+            <div id="map"></div>
+        </form>
+    </div>
+
+    <div class="bottom">
+        <progress value="75" max="100" class="progress-bar"></progress>
+        <div class="btn-container">
+            <button type="submit" class="btn">Next</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const eventForm = document.getElementById("eventForm");
+
+            eventForm.addEventListener("submit", function (e) {
+                e.preventDefault();
+
+                // Get the form data
+                const formData = new FormData(eventForm);
+
+                // Send the form data to the server
+                fetch("your-server-endpoint.php", {
+                    method: "POST",
+                    body: formData,
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    // Handle the response from the server as needed
+                    console.log(data);
+                    // You can redirect to the next page here if needed
+                    window.location.href = "add_event_4.html";
+                })
+                .catch(error => {
+                    console.error("Fetch error:", error);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
