@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add new event</title>
+    <link rel="stylesheet" href="add_event.css">
+    <link rel="icon" href="GetTogether-logo.png" type="image/x-icon">
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+</head>
+<body>
+    <div class="top" id="top">
+        <button type="button" id="back-button" class="btn btn-back" onclick="goBack()">
+            <iconify-icon icon="ic:baseline-keyboard-arrow-left" width="32"></iconify-icon>
+        </button>
+        <h1>Add an event</h1>
+        <button type="button" id="close-button" class="btn close" onclick="Home()">
+            <iconify-icon icon="ic:baseline-clear" width="32"></iconify-icon>
+        </button>
+    </div>
+
+    <div class="container">
+        <div class="name" id="name">
+            <input type="text" id="eventName" placeholder="Name" required>
+        </div>
+        <div class="description">
+            <textarea id="description" placeholder="• What is it about? 
+• For who 
+• What are you going to do" maxlength="200"></textarea>
+        </div>
+
+        <div class="online">
+            <span>Online</span>
+            <label class="switch">
+                <input type="checkbox" id="onlineCheckbox">
+                <span class="slider round"></span>
+            </label>
+        </div>
+          
+        <div class="link" id="link">
+            <input type="text" placeholder="Link" id="linkInput" disabled>
+        </div>
+
+        <div class="category-list">
+            <div class="category">
+                <input type="checkbox" id="Sport" name="Sport">
+                <label for="Sport">Sport</label>
+            </div>
+            <!-- Repeat for other checkboxes -->
+            <div class="category">
+                <input type="checkbox" id="Music" name="Music">
+                <label for="Music">Music</label>
+            </div>
+
+            <div class="category">
+                <input type="checkbox" id="Party" name="Party">
+                <label for="Party">Party</label>
+            </div>
+            
+        </div>
+        <div id="categoryCount">Selected categories: 0</div>
+    </div>
+
+    <div class="bottom">
+        <progress value="25" max="100" class="progress-bar"></progress>
+        <div class="btn-container">
+            <button type="button" id="nextButton" class="btn" onclick="validateAndNavigate()">Next</button>
+        </div>
+    </div>
+    <script src="add_event.js"></script>
+</body>
+</html>

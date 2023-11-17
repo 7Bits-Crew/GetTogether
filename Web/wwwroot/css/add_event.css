@@ -1,0 +1,570 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+    font-size: 16px;
+    color: #26005C;
+}
+
+/* Add a background color to the body */
+body {
+    display: flex;
+    flex-direction: column; /* Place children vertically */
+    align-items: center;
+}
+
+.error {
+    border: 1px solid #FF8989;
+}
+
+@media (max-width: 768px) {
+    .container {
+    width: 100%;
+    }
+}
+
+/* Move #top to the top */
+.top {
+    width: 100%;
+    left: 35px;
+    padding: 0 35px 0 35px ;
+    display: flex; /* Make it a flex container */
+    justify-content: space-between;
+    align-items: center; /* Align items vertically */
+    margin-top: 80px; /* Adjust margin as needed */
+}
+
+.top h1 {
+    font-size: 26px;
+    margin: 0; /* Remove default margin */
+}
+
+.container {
+    width: 100%;
+    border: 2px solid rgba(255, 255, 255, .2);
+    justify-content: space-between;
+    color: #fff;
+    border-radius: 12px;
+    padding: 30px 40px; /* Adjust padding */
+    display: flex;
+    flex-direction: column; /* Stack elements in a column */
+    align-items: center;
+}
+
+/* Add margin between stacked elements */
+.name, .description, .category-list, .link, .location, .photos-list {
+    margin: 10px auto;
+}
+
+
+#back-button,
+#close-button {
+    width: 32px;
+    height: 32px;
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    box-shadow: none;
+}
+
+.name,
+.description,
+.category-list, .link, .location, .photos-list {
+    width: 100%;
+    margin: 10px auto;
+}
+
+.photos-list {
+    height: 120px;
+}
+
+.link input[disabled] {
+    background-color: transparent;
+    opacity: 0;
+}
+
+.date input[disabled] {
+    opacity: 0;
+}
+
+.bottom {
+    position: absolute;
+    top: 792px;
+    left: 35px;
+    right: 35px;
+    
+}
+
+.name, .link, .location, .address {
+    display: flex;
+    align-items: center;
+    height: 48px;
+    border-radius: 32px;
+    background-color: #F9F9F9;
+    padding: 0 15px;
+    margin-top: 24px;
+    padding: 14px 24px 15px 24px;
+}
+
+.container h2{
+    left: 35px;
+}
+
+input[type="text"] {
+    background: transparent;
+    color: #26005C;
+    width: 100%;
+    border: none;
+    outline: none;
+}
+
+input[type="text"]::placeholder {
+    color: #ACACAD;
+}
+
+.description {
+    display: flex;
+    height: 160px;
+    border-radius: 32px;
+    background-color: #F9F9F9;
+    margin-top: 24px;
+    padding: 14px 24px 15px 24px;
+}
+
+textarea {
+    width: 100%;
+    height: 100%;
+    resize: none;
+    border: none;
+    background: transparent;
+}
+
+textarea:focus {
+    outline: none;
+}
+
+textarea::placeholder {
+    color: #ACACAD;
+}
+
+.switch {
+    display: flex;
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    align-items: center;
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #A689FF;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #A689FF;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.category-list, .photos-list {
+    display: flex;
+    white-space: nowrap;
+    overflow-y: hidden; /* Hide vertical scroll */
+    width: 100%;
+    border: none;
+    background: none;
+    scrollbar-width: none;
+    -ms-overflow-style: none; /* Hide scrollbar in IE and Edge */
+
+    /* Add horizontal scrolling (overflow-x) */
+    overflow-x: scroll; /* or auto if you prefer automatic scrollbar appearance */
+
+    /* Hide the scrollbar for Webkit browsers (e.g., Chrome, Safari) */
+    &::-webkit-scrollbar {
+        width: 0; /* Width of the scrollbar */
+    }
+
+    align-items: center;
+}
+
+.category, .photo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.category input[type="checkbox"] {
+    visibility: hidden;
+}
+
+.photo input[type="radio"] {
+    visibility: hidden;
+}
+
+.photo label {
+    background-color: #DEDEDE;
+    cursor: pointer;
+    height: 80px;
+    width: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the content vertically and horizontally */
+    justify-content: center;
+}
+
+.category label {
+    background-color: #DEDEDE;
+    border-radius: 50%;
+    cursor: pointer;
+    height: 80px;
+    width: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the content vertically and horizontally */
+    justify-content: center;
+}
+
+.photo label {
+    background-color: #DEDEDE;
+    border-radius: 16%;
+    cursor: pointer;
+    height: 80px;
+    width: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the content vertically and horizontally */
+    justify-content: center;
+}
+
+
+.photo label:after {
+    border: none;
+    content: "";
+    height: 6px;
+    left: 7px;
+    opacity: 0;
+    position: absolute;
+    top: 8px;
+    transform: rotate(-45deg);
+    width: 12px;
+}
+
+.category input[type="checkbox"]:checked + label {
+    background-color: #F5F186;
+    border-color: #F5F186;
+}
+
+.photo {
+    width: 80px; /* Set the width to 80px */
+    height: 80px; /* Set the height to 80px */
+    top: 596px; /* Set the top position to 596px */
+    left: 35px; /* Set the left position to 35px */
+    border-radius: 16px; /* Set the border-radius to 16px */
+}
+
+
+.online {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    font-size: 16px;
+    margin: 20px 0 0; /* Adjust margin */
+    font-weight: 400;
+    line-height: 19px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.progress-bar {
+    display: flex;
+    width: 100%;
+    height: 4px; /* Adjust the height as needed */
+    background: #BB86FC61;
+    margin-top: 20px; /* Adjust margin */
+}
+
+.progress-bar::-webkit-progress-bar {
+    background: #BB86FC61;
+}
+
+.progress-bar::-webkit-progress-value {
+    background: #6200EE;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; /* Adjust margin */
+}
+
+.btn {
+    width: 360px;
+    height: 48px;
+    background: #A689FF;
+    border: none;
+    outline: none;
+    border-radius: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 16px;
+    color: #FFFFFF;
+    font-weight: 500;
+    padding: 10px 16px; /* Adjust padding */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.additional {
+    font-family: Roboto;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0.4000000059604645px;
+    text-align: left;
+    color: #9A9A9A;
+}
+
+.date {
+    width: 360px;
+    height: 123px;
+    top: 142px;
+    left: 35px;
+    display: flex;
+    flex-direction: column; /* Stack elements in a column */
+}
+
+.duration {
+    width: 312px;
+    height: 83px;
+    top: 301px;
+    left: 35px;
+    border-radius: 32px;
+}
+
+#participants {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: #A689FF;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: #FFFFFF;
+    border: none;
+    justify-content: center;
+}
+
+#participants:focus {
+    outline: none;
+}
+
+#plus {
+    width: 42px;
+    height: 42px;
+    background: #F9F9F9;
+    color: #ACACAD;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 16px; /* Adjust padding */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 14px 0px 0px 14px;
+}
+
+#minus {
+    height: 42px;
+    width: 42px;
+    background: #F9F9F9;
+    color: #ACACAD;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 16px; /* Adjust padding */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0px 14px 14px 0px;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Adjust the gap between buttons */
+}
+
+/* Modify the switch container to use flexbox */
+.template, .public {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.template {
+    width: 360px;
+    height: 45px;
+    top: 634px;
+    left: 35px;
+    padding: 2px 0px 0px 0px;
+    gap: 8px;
+}
+
+.public {
+    width: 360px;
+    height: 45px;
+    top: 703px;
+    left: 35px;
+    padding: 2px 0px 0px 0px;
+    gap: 8px;
+}
+
+.start-end {
+    width: 360px;
+    height: 48px;
+    top: 177px;
+    left: 35px;
+    padding: 14px, 24px, 15px, 24px;
+    border-radius: 32px;
+    gap: 8px;
+}
+
+.error {
+    border: 1px solid #FF8989;
+    input[type="text"]::placeholder {
+        color: #FF8989;
+    }
+}
+
+#map {
+    display: flex;
+    width: 100%;
+    height: 500px;
+    margin-top: 30px;
+}
+
+.template,
+.public {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.days label {
+    font-family: Roboto;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0.4000000059604645px;
+    text-align: left;
+    color: #9A9A9A; /* Add the color style for the label text */
+}
+
+.days {
+    display: flex;
+    left: 55px;
+}
+
+.media {
+    width: 430px;
+    height: 430px;
+}
+
+.photo-label {
+    background-color: #DEDEDE;
+    cursor: pointer;
+    height: 80px;
+    width: 80px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.photo-label {
+    background-color: #DEDEDE;
+    cursor: pointer;
+    width: 80px; /* Adjust the width to your desired size */
+    height: 80px; /* Adjust the height to your desired size */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Clip the image to the defined size */
+}
+.photo-label img {
+    max-width: 100%; /* Ensure the image doesn't exceed its container's width */
+    max-height: 100%; /* Ensure the image doesn't exceed its container's height */
+}
+
+.media img {
+    max-width: 100%; /* Ensure the image doesn't exceed its container's width */
+    max-height: 100%; /* Ensure the image doesn't exceed its container's height */
+}
+
+.photo input[type="radio"]:checked + label .photo-label img {
+    filter: blur(10px);
+}
+
+.photo input[type="radio"] + label .photo-label img {
+    filter: blur(0); /* Remove blur filter for unchecked images */
+}
+

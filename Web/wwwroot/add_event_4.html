@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add new event</title>
+    <link rel="stylesheet" href="add_event.css">
+    <link rel="icon" href="GetTogether-logo.png" type="image/x-icon">
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+</head>
+<body>
+    <div class="top" id="top">
+        <button type="button" id="back-button" class="btn btn-back" onclick="goBack()">
+            <iconify-icon icon="ic:baseline-keyboard-arrow-left" width="32"></iconify-icon>
+        </button>
+        <h1>Add an event</h1>
+        <button type="button" id="close-button" class="btn close" onclick="Home()">
+            <iconify-icon icon="ic:baseline-clear" width="32"></iconify-icon>
+        </button>
+    </div>
+
+    <div class="container">
+        <div class="media" id="main_media">
+            
+        </div>
+
+        <div class="photos-list">
+            <div class="photo">
+                <input type="radio" id="photo1" name="photoSelection" value="back1" onchange="changeBackgroundPhoto('back1')">
+                <label for="photo1">
+                    <div class="photo-label">
+                        <img src="photos/photo1.png" alt="background1">
+                    </div>
+                </label>
+            </div>
+            
+            <div class="photo">
+                <input type="radio" id="photo2" name="photoSelection" value="back2" onchange="changeBackgroundPhoto('back2')">
+                <label for="photo2">
+                    <div class="photo-label2">
+                        <img src="photos/photo2.png" alt="background2">
+                    </div>
+                </label>
+            </div>
+            
+            <div class="photo">
+                <input type="radio" id="photo3" name="photoSelection" value="back3" onchange="changeBackgroundPhoto('back3')">
+                <label for="photo3">
+                    <div class="photo-label3">
+                        <img src="photos/photo3.png" alt="background3">
+                    </div>
+                </label>
+            </div>            
+        </div>
+    </div>
+    
+</div>
+
+    <div class="bottom">
+        <progress value="100" max="100" class="progress-bar"></progress>
+        <div class="btn-container">
+            <button type="button" id="Upload" class="btn" onclick="validateAndNavigate()">Upload the event</button>
+        </div>
+    </div>
+    
+    <script src="add_event.js"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+version: '3.4'
+
+
+services:
+  
+  database:
+    container_name: DB
+    image: mysql:8.0.0
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=my-secret-pw
+
+  api:
+    container_name: API
+    image: ${DOCKER_REGISTRY-}api
+    build:
+      context: .
+      dockerfile: API/Dockerfile
+    depends_on: 
+      - database
+    ports:
+      - 8080:80
+      - 8081:443
+    environment:
+      - ASPNETCORE_URLS=https://+;http://+
+      - ASPNETCORE_HTTPS_PORT=8081
+      - ASPNETCORE_ENVIORMENT=Development
+      - DB_HOST=DB
+      - DB_PASS=my-secret-pw
+      - DB_NAME=GTTest
+      - DB_PORT=3306
+      - WEB_HOST=https://localhost:8002
+    
+    
+  web:
+    container_name: WEB
+    image: ${DOCKER_REGISTRY-}web
+    build:
+      context: .
+      dockerfile: Web/Dockerfile
+    depends_on: 
+      - api
+    ports:
+      - 8001:80
+      - 8002:443
+    environment:
+      ASPNETCORE_URLS: "https://+;http://+"
+      ASPNETCORE_HTTPS_PORT: "8002"
+      ASPNETCORE_ENVIORMENT: "Development"
+    
+  
+    
+    
+
