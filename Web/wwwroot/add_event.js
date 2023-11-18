@@ -422,8 +422,9 @@ function validateAndNavigate() {
 
    // Add selectedPhoto to the eventDetails object
 
-   // Make a POST request to your server
-   fetch('https://localhost:8081/api/event', {
+      // Make a POST request to your server
+      console.log(JSON.stringify(eventDetails));
+   fetch('https://localhost:8081/api/event/add', {
        method: 'POST',
        headers: {
            'Content-Type': 'application/json',

@@ -1,4 +1,5 @@
 ﻿using API.Models;
+using API.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,9 +16,9 @@ namespace API.Controllers
         {
             _context = context;
         }
-        // POST api/<EventController>
-        [HttpPost]
-        public async Task<ActionResult<List<Event>>> AddEvent([FromBody] Event value)
+
+        [HttpPost("add")]
+        public async Task<ActionResult<string>> AddEvent([FromBody] Event value)
         {
             value.Id = Guid.Empty;
             List<EventType> types = new List<EventType>();
@@ -29,7 +30,46 @@ namespace API.Controllers
             value.Type = types;
             _context.Events.Add(value);
             await _context.SaveChangesAsync();
-            return Ok(await _context.Events.ToArrayAsync());
+            var ok = new { ok="ok" };
+            return Ok(ok);
+        }
+
+        [HttpGet("get/all")]
+        public async Task<ActionResult<List<Event>>> GetAll() {
+            List<Event> events = await _context.Events.ToListAsync();
+            foreach(Event e in events)
+            {
+                e.Type = await _context.EventTypes.Where(k => k.Events.Contains(e)).ToListAsync();
+            }
+            return Ok(events);
+            
+        }
+
+        [HttpGet("get/page")]
+        public async Task<ActionResult<EventsPageDTO>> GetPage(int page, int size)
+        {
+            if (page < 1) {
+                return BadRequest("Номер сторінки має бути більше нуля");
+            }
+            if (size < 1) {
+                return BadRequest("Розмір сторінки має бути більше нуля");
+
+            }
+            List<Event> events = await _context.Events.Skip((page-1)* size).Take(size).ToListAsync();
+            foreach (Event e in events)
+            {
+                e.Type = await _context.EventTypes.Where(k => k.Events.Contains(e)).ToListAsync();
+            }
+            var dto = new EventsPageDTO();
+            dto.PageCount = _context.Events.Count() / size;
+            if (_context.Events.Count() % size != 0)
+                dto.PageCount++;
+            dto.Events = events;
+            dto.Page = page;
+            dto.PageSize = size;
+
+            return Ok(dto);
+
         }
 
     }
