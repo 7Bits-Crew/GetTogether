@@ -26,6 +26,8 @@ namespace API.Models
         public bool SaveTemplate { get; set; }
         public bool Online { get; set; }
         public string LinkInput { get; set; }
+        [NotMapped]
+        public string Photo { get; set; }
     }
 }
 

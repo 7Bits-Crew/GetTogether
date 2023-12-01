@@ -40,7 +40,9 @@ namespace API.Controllers
             foreach(Event e in events)
             {
                 e.Type = await _context.EventTypes.Where(k => k.Events.Contains(e)).ToListAsync();
+                e.Photo = "default.webp";
             }
+            
             return Ok(events);
             
         }
@@ -59,6 +61,7 @@ namespace API.Controllers
             foreach (Event e in events)
             {
                 e.Type = await _context.EventTypes.Where(k => k.Events.Contains(e)).ToListAsync();
+                e.Photo = "default.webp";
             }
             var dto = new EventsPageDTO();
             dto.PageCount = _context.Events.Count() / size;
