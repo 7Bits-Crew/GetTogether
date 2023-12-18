@@ -11,8 +11,8 @@ namespace API.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         [Required]
-        [StringLength(200)]
-        public string Place { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
         [Required]
         [StringLength(50)]
         public string Name { get; set; }
@@ -27,7 +27,7 @@ namespace API.Models
         public bool Online { get; set; }
         public string LinkInput { get; set; }
         [NotMapped]
-        public string Photo { get; set; }
+        public string? Photo { get; set; }
     }
 }
 

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ukr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Додати подію</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="GetTogether-logo.png" type="image/x-icon">
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetchCategories();
+
+            function fetchCategories() {
+                const endpoint = 'https://localhost:8081/api/Categories/all';
+
+                fetch(endpoint)
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then((data) => {
+                        updateCategoriesList(data);
+                    })
+                    .catch((error) => {
+                        console.error('Error fetching categories:', error);
+                    });
+            }
+
+            function updateCategoriesList(categories) {
+                const categoryListMain = document.getElementById('category-list');
+
+                // Iterate through the categories and create checkboxes
+                categories.forEach((category) => {
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.id = category.id;
+                    checkbox.name = category.name;
+
+                    const label = document.createElement('label');
+                    label.htmlFor = category.id;
+                    label.textContent = category.name;
+
+                    const div = document.createElement('div');
+                    div.className = 'category';
+                    div.appendChild(checkbox);
+                    div.appendChild(label);
+
+                    // Append the category div to the categoryListMain div
+                    categoryListMain.appendChild(div);
+                });
+            }
+        });
+    </script>
+
+</head>
+<body>
+    <div class="top" id="top">
+        <button type="button" id="back-button" class="btn btn-back" onclick="goBack()">
+            <iconify-icon icon="ic:baseline-keyboard-arrow-left" width="32"></iconify-icon>
+        </button>
+        <h1>Додати подію</h1>
+        <button type="button" id="close-button" class="btn close" onclick="Home()">
+            <iconify-icon icon="ic:baseline-clear" width="32"></iconify-icon>
+        </button>
+    </div>
+
+    <div id="screen1">
+        <div class="container">
+            <div>
+                <div class="input" id="name">
+                    <input type="text" id="eventName" placeholder="Назва" required>
+                </div>
+        
+                <div class="subtxt hidden" id="error_message">
+                    Введіть ім'я
+                </div>
+            </div>
+            
+            <div class="description">
+                <textarea id="description" placeholder="• Про що це? 
+• Для кого це підійде? 
+• Що саме будете робити?" maxlength="200"></textarea>
+            </div>
+    
+            <div>
+                <div class="online">
+                    <label for="onlineCheckbox">Онлайн</label>
+                    <label class="switch">
+                        <input type="checkbox" id="onlineCheckbox">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+        
+                <div class="subtxt">Подія відбудеться в онлайн форматі за посиланням</div>
+            </div>
+            
+            <div>
+                <div class="input" id="link">
+                    <input type="text" placeholder="Посилання" id="linkInput" disabled>
+                </div>
+    
+                <div class="subtxt hidden" id="error_message_online">
+                    Помилка у посиланні
+                </div>
+            </div>
+    
+            <div class="category-list" id="category-list"></div>
+    
+            <div class="bottom">
+                <progress value="25" max="100" class="progress-bar"></progress>
+                <div class="btn-container">
+                    <button type="button" id="nextButton" class="btn" onclick="validateAndNavigate()">Далі</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hidden" id="screen2">
+        <div class="container">
+            <div class="date">
+                <label for="date_start">Дата</label>
+                <div class="start-end">
+                    <input type="date" id="date_start" required>
+                    <input type="date" id="date_end" min="<?= date('MM-DD-YY') ?>" disabled>
+                </div>
+                <div class="checkbox">
+                    <input type="checkbox" id="days" onclick="toggleDateEndPicker()">
+                    <label for="days">Більше, ніж один день</label>
+                </div>
+            </div>
+    
+            <div class="duration" id="duration">
+                <label for="start">Тривалість</label>
+                <div class="time">
+                    <input type="time" id="start" required min="<?= date('H:i', strtotime('+1 minute')) ?>" placeholder="Дата">
+                    <input type="time" id="end" required>
+                </div>
+            </div>
+            
+            <div class="participants">
+                <div class="info">
+                    <span>Учасники</span>
+                    <div class="subtxt">
+                        Кількість людей, які можуть долучитись до події
+                    </div>
+                </div>
+    
+                <div class="quantity">
+                    <input type="number" id="participants" min="0" value="0">
+                    <button type="button" class="btn" id="plus" onclick="incrementParticipants()">+</button>
+                    <button type="button" class="btn" id="minus" onclick="decrementParticipants()">-</button>
+                </div>
+            </div>
+    
+            <div class="template">
+                <div class="info">
+                    <span>Зберегти як шаблон</span>
+                    <div class="subtxt">
+                        Для зручності створення повторної події
+                    </div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="template">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+    
+            <div class="public">
+                <div class = "info">
+                    <span>Приватна/Публічна подія</span>
+                    <div class="subtxt">
+                        Дозвіл на додавання нових учасників
+                    </div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="public">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+    
+            <div class="bottom">
+                <progress value="50" max="100" class="progress-bar"></progress>
+                <div class="btn-container">
+                    <button type="button" id="nextButton" class="btn" onclick="validateAndNavigate()">Далі</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hidden" id="screen3">
+        <div class="container">
+            <div class="input" id="place">
+                <input type="text" id="addressInput" placeholder="Адреса" required>
+            </div>
+    
+            <div class="checkbox">
+                <input type="checkbox" id="current_address">
+                <label for="current_address">Використовувати геолокацію пристрою</label>
+            </div>
+    
+            <div id="map"></div>
+    
+            <div class="bottom">
+              <progress value="75" max="100" class="progress-bar"></progress>
+              <div class="btn-container">
+                  <button type="button" id="nextButton" class="btn" onclick="validateAndNavigate()">Далі</button>
+              </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="hidden" id="screen4">
+        <div class="container">
+            <div class="media" id="main_media">
+                
+            </div>
+    
+            <div class="photos-list">
+                <div class="photo">
+                    <input type="radio" id="photo1" name="photoSelection" value="back1" onchange="changeBackgroundPhoto('back1')">
+                    <label for="photo1">
+                        <div class="photo-label">
+                            <img src="photos/photo1.png" alt="background1">
+                        </div>
+                    </label>
+                </div>
+                
+                <div class="photo">
+                    <input type="radio" id="photo2" name="photoSelection" value="back2" onchange="changeBackgroundPhoto('back2')">
+                    <label for="photo2">
+                        <div class="photo-label2">
+                            <img src="photos/photo2.png" alt="background2">
+                        </div>
+                    </label>
+                </div>
+                
+                <div class="photo">
+                    <input type="radio" id="photo3" name="photoSelection" value="back3" onchange="changeBackgroundPhoto('back3')">
+                    <label for="photo3">
+                        <div class="photo-label3">
+                            <img src="photos/photo3.png" alt="background3">
+                        </div>
+                    </label>
+                </div>      
+            </div>
+    
+            <div class="bottom">
+                <progress value="100" max="100" class="progress-bar"></progress>
+                <div class="btn-container">
+                    <button type="button" id="nextButton" class="btn" onclick="validateAndNavigate(); addNewEvent();">ОПУБЛІКУВАТИ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="add_event.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdNLtdXEyIjmyLAHGNteoV0Y1gzp0y_CY&callback=initMap&libraries=places&v=weekly" async defer></script>
+
+</body>
+</html>
